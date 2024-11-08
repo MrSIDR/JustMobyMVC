@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c57a0619f5d5489fb00645cee6f18005, type: 3}
+  m_Name: IconConfig
+  m_EditorClassIdentifier: 
+  _config:
+  - _iconName: offerWood
+    _sprite: {fileID: 21300000, guid: 7103a75ef1423fd4b81b641d51240b0a, type: 3}
+  - _iconName: wood
+    _sprite: {fileID: 21300000, guid: 0babb8dc394cd9649906b013ec76296b, type: 3}
+  - _iconName: cloth
+    _sprite: {fileID: 21300000, guid: a74d7c82c53db6a46b762fdfbb216764, type: 3}
+  - _iconName: coal
+    _sprite: {fileID: 21300000, guid: d11e1035a9b465e4884da6783ee03afb, type: 3}
+  - _iconName: metal
+    _sprite: {fileID: 21300000, guid: 362d681d00665364c83f956cf169519c, type: 3}
+  - _iconName: stones
+    _sprite: {fileID: 21300000, guid: 37b92f2dad1cde640bcd91fd14411417, type: 3}
+  - _iconName: offerSource
+    _sprite: {fileID: 21300000, guid: ca9173f4c53266144b5e2053897fb8aa, type: 3}
