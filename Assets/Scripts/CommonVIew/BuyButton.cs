@@ -8,7 +8,7 @@ namespace CommonVIew
     public class BuyButton : MonoBehaviour
     {
         private const string DiscountFormat = "-{0}%";
-        private const string OldPriceFormat = "{0:.##}";
+        private const string PriceFormat = "{0:.00}";
         
         [SerializeField] private TMP_Text _discountPrice;
         [SerializeField] private TMP_Text _oldPrice;
@@ -43,8 +43,8 @@ namespace CommonVIew
         {
             var oldPrice = price / (1 - discount);
             
-            _discountPrice.text = price.ToString();
-            _oldPrice.text = string.Format(OldPriceFormat, oldPrice);
+            _discountPrice.text = string.Format(PriceFormat, price);
+            _oldPrice.text = string.Format(PriceFormat, oldPrice);
             
             var discountInt = Mathf.RoundToInt(100 * discount);
             _discount.text = string.Format(DiscountFormat, discountInt);
@@ -57,7 +57,7 @@ namespace CommonVIew
         
         private void SetPrice(float price)
         {
-            _price.text = price.ToString();
+            _price.text = string.Format(PriceFormat, price);
             
             _price.gameObject.SetActive(true);
             

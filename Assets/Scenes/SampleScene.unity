@@ -425,6 +425,10 @@ MonoBehaviour:
   _openOfferButton: {fileID: 129820009}
   _offers: {fileID: 11400000, guid: b1d063534f15c7f4bb2a4a0a85a3d82c, type: 2}
   _windowRoot: {fileID: 1207365537}
+  _IconConfig: {fileID: 11400000, guid: 8db9aed45bc212f4580dbe3b7af00143, type: 2}
+  _offerRewardViewPrefab: {fileID: 3904112043040362538, guid: d3352a948a9d94e42b077e4f898c92d6, type: 3}
+  _horizontalRewardRootPrefab: {fileID: 5981656668873429580, guid: ebbfc4f323b6cb14093069a692ba0a7c, type: 3}
+  _modelIndex: 1
 --- !u!4 &719892062
 Transform:
   m_ObjectHideFlags: 0

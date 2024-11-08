@@ -1,5 +1,5 @@
 using System;
-using Assets.SimpleLocalization.Scripts;
+using System.Collections.Generic;
 using CommonVIew;
 using OffersFeature.Model;
 using TMPro;
@@ -12,19 +12,35 @@ namespace OffersFeature.View
     {
         public event Action OnClickClose;
         public event Action OnClickBuy;
+        
+        private readonly List<IOfferRewardView> _rewards = new List<IOfferRewardView>();
+        private readonly List<HorizontalRewardRoot> _horizontalRoots = new List<HorizontalRewardRoot>();
 
+        [SerializeField] private int _maxColumnNumber = 3;
+        [SerializeField] private Transform _rewardContainer;
+        
         [SerializeField] private TMP_Text _headerText;
         [SerializeField] private TMP_Text _descriptionText;
         
+        [SerializeField] private Image _generalImage;
         [SerializeField] private Button _closeButton;
         [SerializeField] private BuyButton _buyButton;
-
-        private float _price;
+        
         private bool _wasSetup;
         private IObservableOfferModel _observableOfferModel;
 
-        public void Init()
+        private IIconHelper _iconHelper;
+        private HorizontalRewardRootFactory _horizontalRootFactory;
+        private OfferRewardViewFactory _rewardViewFactory;
+
+        public void Init(
+            IIconHelper iconHelper,
+            OfferRewardViewFactory rewardViewFactory,
+            HorizontalRewardRootFactory horizontalRootFactory)
         {
+            _iconHelper = iconHelper;
+            _rewardViewFactory = rewardViewFactory;
+            _horizontalRootFactory = horizontalRootFactory;
             _closeButton.onClick.RemoveListener(ClickCloseView);
             _closeButton.onClick.AddListener(ClickCloseView);
             
@@ -56,15 +72,66 @@ namespace OffersFeature.View
                 return;
             }
 
-            _price = offerViewConfig.Price;
-            _buyButton.SetupView(_price, offerViewConfig.Discount);
+            SetupRewards(offerViewConfig.Rewards);
+            _buyButton.SetupView(offerViewConfig.Price, offerViewConfig.Discount);
 
+            _generalImage.sprite = _iconHelper.GetSprite(offerViewConfig.OfferIconName);
             _headerText.text = offerViewConfig.HeaderText;
             _descriptionText.text = offerViewConfig.DescriptionText;
             
             _wasSetup = true;
         }
 
+        private void SetupRewards(List<OfferReward> rewards)
+        {
+            for (int i = 0; i < rewards.Count; i++)
+            {
+                var rowIndex = i / _maxColumnNumber;
+
+                if (_horizontalRoots.Count <= rowIndex)
+                {
+                    var horizontalRoot = _horizontalRootFactory.Create();
+                    horizontalRoot.transform.SetParent(_rewardContainer, false);
+                    _horizontalRoots.Add(horizontalRoot);
+                }
+                
+                _horizontalRoots[rowIndex].SetActive(true);
+                if (i >= _rewards.Count)
+                {
+                    var rewardView = _rewardViewFactory.Create();
+                    rewardView.Transform.SetParent(_horizontalRoots[rowIndex].Root, false);
+                    _rewards.Add(rewardView);
+                }
+                
+                SetupRewardView(_rewards[i], rewards[i]);
+            }
+
+            if (_rewards.Count > rewards.Count)
+            {
+                for (int i = _rewards.Count - 1; i > rewards.Count - 1; i--)
+                {
+                    _rewards[i].SetActive(false);
+                }
+            }
+            
+            var rowUsedIndex = (rewards.Count - 1) / _maxColumnNumber;
+            var rowCreatedIndex = _horizontalRoots.Count - 1;
+            if (rowCreatedIndex > rowUsedIndex)
+            {
+                for (int i = rowCreatedIndex; i > rowUsedIndex; i--)
+                {
+                    _horizontalRoots[i].SetActive(false);
+                }
+            }
+        }
+
+        private void SetupRewardView(IOfferRewardView view, OfferReward reward)
+        {
+            var sprite = _iconHelper.GetSprite(reward.ItemName);
+            view.SetActive(true);
+            view.SetupView(sprite, reward.ItemCount.ToString());
+        }
+        
         private void ClickCloseView()
         {
             OnClickClose?.Invoke();

@@ -28,7 +28,7 @@ namespace OffersFeature.Model
             _headerKey = config.HeaderKey;
             _descriptionKey = config.DescriptionKey;
             _offerIconName = config.OfferIconName;
-            _rewards = config.Rewards;
+            _rewards =new List<OfferReward>(config.Rewards);
         }
 
         public void SetDiscount(bool hasDiscount)
@@ -37,7 +37,7 @@ namespace OffersFeature.Model
             InvokeChangeModelEvent();
         }
 
-        public float GetPrice()
+        public float GetCurrentPrice()
         {
             return _hasDiscount ? _discountPrice : _price;
         }

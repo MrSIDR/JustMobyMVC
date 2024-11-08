@@ -18,6 +18,11 @@ namespace OffersFeature.Controller
             _offerModel.RefreshView();
         }
 
+        public void SetDiscount(bool hasDiscount)
+        {
+            _offerModel.SetDiscount(hasDiscount);
+        }
+
         public void ShowView()
         {
             _offerView.SetActive(true);
@@ -32,7 +37,7 @@ namespace OffersFeature.Controller
         {
             if (true) //check can buy
             {
-                Debug.Log($"Offer was bought with price {_offerModel.GetPrice()}");
+                Debug.Log($"Offer was bought with price {_offerModel.GetCurrentPrice()}");
             }
         }
 

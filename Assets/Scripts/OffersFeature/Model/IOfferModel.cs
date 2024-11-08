@@ -5,7 +5,7 @@ namespace OffersFeature.Model
         string Id { get; }
 
         void SetDiscount(bool hasDiscount);
-        float GetPrice();
+        float GetCurrentPrice();
         void RefreshView();
     }
 }
