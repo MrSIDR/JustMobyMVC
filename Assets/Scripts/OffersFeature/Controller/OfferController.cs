@@ -23,6 +23,11 @@ namespace OffersFeature.Controller
             _offerModel.SetDiscount(hasDiscount);
         }
 
+        public string GetOfferId()
+        {
+            return _offerModel.Id;
+        }
+        
         public void ShowView()
         {
             _offerView.SetActive(true);

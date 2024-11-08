@@ -41,6 +41,7 @@ namespace OffersFeature.View
             _iconHelper = iconHelper;
             _rewardViewFactory = rewardViewFactory;
             _horizontalRootFactory = horizontalRootFactory;
+            
             _closeButton.onClick.RemoveListener(ClickCloseView);
             _closeButton.onClick.AddListener(ClickCloseView);
             
@@ -106,15 +107,20 @@ namespace OffersFeature.View
                 SetupRewardView(_rewards[i], rewards[i]);
             }
 
-            if (_rewards.Count > rewards.Count)
+            DisableUnnecessaryView(rewards.Count);
+        }
+
+        private void DisableUnnecessaryView(int rewardNumber)
+        {
+            if (_rewards.Count > rewardNumber)
             {
-                for (int i = _rewards.Count - 1; i > rewards.Count - 1; i--)
+                for (int i = _rewards.Count - 1; i > rewardNumber - 1; i--)
                 {
                     _rewards[i].SetActive(false);
                 }
             }
             
-            var rowUsedIndex = (rewards.Count - 1) / _maxColumnNumber;
+            var rowUsedIndex = (rewardNumber - 1) / _maxColumnNumber;
             var rowCreatedIndex = _horizontalRoots.Count - 1;
             if (rowCreatedIndex > rowUsedIndex)
             {
